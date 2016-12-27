@@ -24,7 +24,7 @@ def deletePlayers():
     """Remove all the player records from the database."""
     DB = connect()
     c = DB.cursor()
-    c.execute("DELETE FROM player")
+    c.execute("TRUNCATE player CASCADE")
     DB.commit()
     DB.close()
 
@@ -34,9 +34,9 @@ def countPlayers():
     DB = connect()
     c = DB.cursor()
     c.execute("SELECT count(*) AS number FROM player")
-    players = c.fetchall()
+    players = c.fetchone()
     DB.close()
-    return int(players[0][0])
+    return int(players[0])
 
 
 def registerPlayer(name):
@@ -114,8 +114,8 @@ def swissPairings():
     c = DB.cursor()
     c.execute("SELECT userid,name FROM standings ORDER BY wins DESC")
     player_wins = c.fetchall()
-    c.execute("SELECT count(*) AS num FROM standings")
-    num = int(c.fetchall()[0][0])
+    # c.execute("SELECT count(*) AS num FROM standings")
+    num = len(player_wins)
     matches = []
     i = 0
     while i < num:
