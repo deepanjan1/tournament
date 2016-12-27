@@ -8,13 +8,23 @@
 
 CREATE TABLE player (
 	userid SERIAL PRIMARY KEY NOT NULL,
-	name TEXT NOT NULL);
+	name TEXT NOT NULL,	
+	wins INT DEFAULT 0,
+	losses INT DEFAULT 0);
 
-CREATE TABLE record (
-	userid INT REFERENCES player(userid) PRIMARY KEY,
-	wins INT,
-	losses INT);
 
-CREATE TABLE match (
-	winner INT REFERENCES player(userid),
-	loser INT REFERENCES player(userid));
+--ARCHIVED TABLES
+--
+-- CREATE TABLE record (
+-- 	userid INT REFERENCES player(userid) PRIMARY KEY,
+-- 	wins INT DEFAULT 0,
+-- 	losses INT DEFAULT 0);
+
+-- CREATE TABLE match (
+-- 	winner INT REFERENCES player(userid),
+-- 	loser INT REFERENCES player(userid));
+
+-- CREATE VIEW standings AS
+-- 	SELECT userid,name,wins,(wins+losses) AS matches 
+-- 	FROM player 
+-- 	ORDER BY wins DESC;
